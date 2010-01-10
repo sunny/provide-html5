@@ -1,129 +1,31 @@
 <!DOCTYPE html>
 <html class="no-js">
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
-<link rel="stylesheet" href="http://www.eyecon.ro/colorpicker/css/colorpicker.css" type="text/css" />
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Testing ProvideHTML5</title>
 
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<script src="http://www.eyecon.ro/colorpicker/js/colorpicker.js"></script>
-<script src="http://files.farukat.es/js/modernizr-1.1.js"></script>
-
-<title>jQuery + Modernizr test</title>
-
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
-<style type="text/css" media="screen">
-  body { background-color: #000; font: 16px calibri, tahoma Helvetica, Arial; color: #fff; }
-</style>  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="http://www.eyecon.ro/colorpicker/css/colorpicker.css" type="text/css" />
+  <script src="http://www.eyecon.ro/colorpicker/js/colorpicker.js"></script>
+  <script src="http://files.farukat.es/js/modernizr-1.1.js"></script>
+  <script src="provide-html5.js"></script>
+  <script>
+    $(function() {  ProvideHtml5.all() })
+  </script>
+  <style>
+    body { background-color: #000; font: 16px calibri, tahoma Helvetica, Arial; color: #fff; }
+  </style>  
 </head>
-
-
 <body>
-  <p>Testing...</p>
+  <p>Testing…</p>
   
   <p> <input autofocus value="autofocus input"> </p>
   <p> <input placeholder="placeholder" value=""> </p>  
   <p> <input type="date"> input type="date" </p> 
   <p> <input type="color"> input type="color" </p>   
   <p> <input type="number"> Only accepts numbers </p>  
-  
-  
-  
-  <script>
-  // provide_html5.js from sunny
-  // from http://gist.github.com/269904
-  // Attempt to make a drop-and-forget bunch of scripts that mimick some missing html5 goodies automatically
-
-var ProvideHtml5 = {
-  autofocus : function() {
-    if (!Modernizr.autofocus)
-      $('input[autofocus=""]').focus();
-  },
-  colorpicker : function() {
-    if (!Modernizr.inputtypes.color)
-      $('input[type=color]').ColorPicker({
-	onSubmit: function(hsb, hex, rgb, el) {
-		$(el).val(hex);
-		$(el).ColorPickerHide();
-	},
-	onBeforeShow: function () {
-		$(this).ColorPickerSetColor(this.value);
-	},
-	onChange: function (hsb, hex, rgb, el) {
-		$('input[type=color]').val('#'+hex);
-	}
-        }).bind('keyup', function(){
-	    $(this).ColorPickerSetColor(this.value);
-        });
-  },
-  datepicker : function() {
-    var datetypes = 'date month week time datetime datetime-local'.split(/ /)
-    $(datetypes).each(function(i, type) {
-      if (!Modernizr.inputtypes[type])
-        $('input[type='+type+']').datepicker()
-    })
-  },
-  forcenumber : function() {
-    if (!Modernizr.inputtypes.number)
-      $('input[type=number]').forcenumber();
-  },
-  placeholder : function() {
-    if (!Modernizr.input.placeholder)
-      $('input[placeholder]').placeholder();
-  },
-
-  all : function() {
-    for (f in this)
-     if (f != 'all')
-       this[f]()
-  }
-};
-
-$.fn.placeholder = function() {
-  return $(this)
-    .each(function(){ 
-      $(this).data('default', $(this).attr('placeholder'));
-    })
-    .focus(function(){
-      ($(this).val()===$(this).data('default')) && $(this).val('');
-    })
-    .blur(function(){
-      ($(this).val()==='') && $(this).val($(this).data('default'));
-    }).blur();
-}
-
-
-$.fn.forcenumber = function() {
-  return $(this).unbind().keyup(function(e) {
-
-    var val = $(this).val(),
-        num = parseFloat(val),
-        min = parseFloat($(this).attr('min')),
-        max = parseFloat($(this).attr('max'));
-
-	if ( ! val.match(/^(\d|-)?(\d|,)*\.?\d*$/) )
-	  return $(this).val(val.match(/((\d|-)?(\d|,)*\.?\d*)/)[0])
-
-    if (min && num < min)
-      return $(this).val(min)
-
-    if (max && num > max)
-      return $(this).val(max)
-    
-  });
-}
-
-
-</script>
-
-<script>
- $(document).ready(function() {
-   ProvideHtml5.all()
- })
-</script>
 
 </body>
 </html>
